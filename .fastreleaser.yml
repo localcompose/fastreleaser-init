@@ -1,0 +1,2 @@
+releasecommand: |-
+  gh release create v --verify-tag --draft --generate-notes

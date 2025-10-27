@@ -1,0 +1,22 @@
+name: Run Fastreleaser Yield
+
+on:
+  workflow_dispatch:
+
+jobs:
+  yield:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref }}
+
+      - name: Setup Fastreleaser
+        uses: ./.github/actions/setup-fastreleaser
+
+      - name: Run fastreleaser yield
+        run: fastreleaser yield

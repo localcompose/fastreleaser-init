@@ -1,0 +1,24 @@
+name: Run Fastreleaser Update
+
+on:
+  push:
+    branches-ignore:
+      - main   # replace with your default branch
+
+jobs:
+  fastreleaser-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref }}
+
+      - name: Setup Fastreleaser
+        uses: ./.github/actions/setup-fastreleaser
+
+      - name: Run fastreleaser update
+        run: fastreleaser update

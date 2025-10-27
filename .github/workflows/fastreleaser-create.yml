@@ -1,0 +1,27 @@
+name: Run Fastreleaser Create
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version prefix or tag (default: v)'
+        default: 'v'
+        required: false
+
+jobs:
+  fastreleaser-create:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          ref: ${{ github.ref }}
+
+      - name: Setup Fastreleaser
+        uses: ./.github/actions/setup-fastreleaser
+
+      - name: Run fastreleaser create
+        run: fastreleaser create ${{ github.event.inputs.version }}
